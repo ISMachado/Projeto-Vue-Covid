@@ -21,6 +21,26 @@
         placeholder="Digite o nome de um país"
       />
     </div>
+    
+    <div>
+      <!-- Botão para ordenar países por quantidade de casos -->
+      <button @click="sortCountries">
+        {{
+          sortByCases === "asc"
+            ? "Ordenar por Mais Casos"
+            : "Ordenar por Menos Casos"
+        }}
+      </button>
+  
+      <!-- Botão para ordenar países alfabeticamente -->
+      <button @click="sortAlphabetically">
+        {{
+          sortAlphabetical === "asc"
+            ? "Ordenar por Nome (Z-A)"
+            : "Ordenar por Nome (A-Z)"
+        }}
+      </button>
+    </div>
 
     <!-- Lista de países -->
     <div class="country-list">
@@ -59,7 +79,7 @@ export default {
       selectedCountry: null,
       countryDetails: [],
       sortByCases: false,
-      sortByName: false,
+      sortAlphabetical: false,
     };
   },
   computed: {
@@ -68,10 +88,22 @@ export default {
         country.name.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
 
-      console.log(filtered); // Verificar se a lista está sendo filtrada
-
-      if (this.sortByCases) {
-        filtered.sort((a, b) => b.cases - a.cases);
+      if (this.sortAlphabetical) {
+        // Ordena alfabeticamente A-Z ou Z-A
+        filtered.sort(
+          (a, b) =>
+            this.sortAlphabetical === "asc"
+              ? a.name.localeCompare(b.name) // A-Z
+              : b.name.localeCompare(a.name) // Z-A
+        );
+      } else if (this.sortByCases) {
+        // Ordena por número de casos
+        filtered.sort(
+          (a, b) =>
+            this.sortByCases === "asc"
+              ? a.cases - b.cases // Menos casos
+              : b.cases - a.cases // Mais casos
+        );
       }
 
       return filtered;
@@ -117,7 +149,14 @@ export default {
         .catch((error) => console.error(error));
     },
     sortCountries() {
-      this.sortByCases = !this.sortByCases;
+      // Alterna entre ordenação crescente e decrescente
+      this.sortByCases = this.sortByCases === "asc" ? "desc" : "asc";
+      this.sortAlphabetical = false; // Desativa a ordenação alfabética
+    },
+    sortAlphabetically() {
+      // Alterna entre ordenação crescente e decrescente
+      this.sortAlphabetical = this.sortAlphabetical === "asc" ? "desc" : "asc";
+      this.sortByCases = false; // Desativa a ordenação por casos
     },
   },
   created() {
@@ -264,5 +303,21 @@ header img {
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
 }
 </style>
