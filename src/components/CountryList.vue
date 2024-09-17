@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>Lista de Países</h2>
     <ul>
       <li
         v-for="country in countries"

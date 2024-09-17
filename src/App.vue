@@ -1,64 +1,82 @@
 <template>
   <div id="app">
-    <!-- Header com título e descrição -->
-    <header>
-      <div class="header-content">
-        <h1>Conheça o Covidômetro</h1>
-        <p>
-          Fique atualizado com veracidade e transparência. O Covidômetro é uma
-          ferramenta para mostrar ao usuário os dados mais recentes de casos e
-          óbitos relacionados à pandemia de COVID-19 ao redor do mundo.
-        </p>
-        <img src="@/assets/doctor-image.png" alt="Ilustração de Médicos" />
+    <nav>
+      <div class="container">
+        <img src="@/assets/logo.png" alt="Logo" />
       </div>
-    </header>
-
-    <!-- Filtro de país -->
-    <div class="search-container">
-      <input
-        type="text"
-        v-model="searchTerm"
-        placeholder="Digite o nome de um país"
-      />
-    </div>
-    
-    <div>
-      <!-- Botão para ordenar países por quantidade de casos -->
-      <button @click="sortCountries">
-        {{
-          sortByCases === "asc"
-            ? "Ordenar por Mais Casos"
-            : "Ordenar por Menos Casos"
-        }}
-      </button>
+    </nav>
+    <div class="container">
+      <!-- Header com título e descrição -->
+      <header>
+        <div class="header-content">
+          <div class="row">
+            <div class="col-lg-6 pt-lg-5">
+              <h1>Conheça o Covidômetro</h1>
+              <p>
+                Fique atualizado com veracidade e transparência. O Covidômetro é uma
+                ferramenta para mostrar ao usuário os dados mais recentes de casos e
+                óbitos  relacionados à pandemia de COVID-19 ao redor do mundo.
+              </p>
+            </div>
+            <div class="col-lg-6">
+              <img src="@/assets/doctor-image.png" alt="Ilustração de Médicos" class="img" />
+            </div>
+          </div>
+          <div class="text-center">
+            <div>
+              <h2>Filtrar dados sobre um país</h2>
+            </div>
   
-      <!-- Botão para ordenar países alfabeticamente -->
-      <button @click="sortAlphabetically">
-        {{
-          sortAlphabetical === "asc"
-            ? "Ordenar por Nome (Z-A)"
-            : "Ordenar por Nome (A-Z)"
-        }}
-      </button>
-    </div>
-
-    <!-- Lista de países -->
-    <div class="country-list">
-      <CountryList
-        :countries="filteredCountries"
-        @selectCountry="fetchCountryDetails"
-      />
-    </div>
-
-    <!-- Detalhes de um país -->
-    <div v-if="selectedCountry" class="country-details">
-      <h2>Detalhes de {{ selectedCountry.name }}</h2>
-      <ul>
-        <li v-for="report in countryDetails" :key="report.date">
-          {{ report.date }} - Casos: {{ report.confirmed }} - Mortes:
-          {{ report.deaths }}
-        </li>
-      </ul>
+            <!-- Filtro de país -->
+            <div class="search-container">
+              <input
+                type="text"
+                v-model="searchTerm"
+                placeholder="Digite o nome de um país"
+              />
+            </div>
+        
+            <div>
+              <!-- Botão para ordenar países por quantidade de casos -->
+              <button @click="sortCountries">
+                {{
+                  sortByCases === "asc"
+                    ? "Ordenar por Mais Casos"
+                    : "Ordenar por Menos Casos"
+                }}
+              </button>
+              
+              <!-- Botão para ordenar países alfabeticamente -->
+              <button @click="sortAlphabetically">
+                {{
+                  sortAlphabetical === "asc"
+                    ? "Ordenar por Nome (Z-A)"
+                    : "Ordenar por Nome (A-Z)"
+                }}
+              </button>
+            </div>
+        
+            <!-- Lista de países -->
+            <div class="country-list">
+              <CountryList
+                :countries="filteredCountries"
+                @selectCountry="fetchCountryDetails"
+              />
+            </div>
+        
+            <!-- Detalhes de um país -->
+            <div v-if="selectedCountry" class="country-details">
+              <h2>Detalhes de {{ selectedCountry.name }}</h2>
+              <ul>
+                <li v-for="report in countryDetails" :key="report.date">
+                  {{ report.date }} - Casos: {{ report.confirmed }} - Mortes:
+                  {{ report.deaths }}
+                </li>
+              </ul>
+            </div>
+          </div>
+          </div>
+      </header>
     </div>
   </div>
 </template>
@@ -175,30 +193,21 @@ export default {
 
 body {
   font-family: "Spectral", serif;
-  background-color: #f9f9f9;
+  background-color: #f7f6f6;
 }
 
-/* Estilos gerais */
-#app {
-  text-align: center;
-  padding: 50px 20px;
-}
-
-/* Header */
-header {
+nav {
   background-color: #fff;
   padding: 20px;
   margin-bottom: 30px;
-  border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  flex-direction: row-reverse;
 }
 
 .header-content h1 {
-  font-size: 2.5rem;
+  font-family: "Spectral";
+  font-size: 48px;
+  font-weight: 700;
   color: #333;
 }
 
@@ -208,8 +217,15 @@ header {
   color: #666;
 }
 
-header img {
-  max-width: 300px;
+.header-content .img {
+  padding-left: 160px;
+}
+
+.header-content h2 {
+  font-family: "Spectral";
+  font-size: 30px;
+  font-weight: 700;
+  color: #333;
 }
 
 /* Caixa de busca */
