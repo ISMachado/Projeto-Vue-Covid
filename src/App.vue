@@ -6,7 +6,6 @@
       </div>
     </nav>
     <div class="container">
-      <!-- Header com título e descrição -->
       <header>
         <div class="header-content">
           <div class="row">
@@ -59,9 +58,7 @@
               </div>
             </div>
 
-
-            <!-- Lista de países -->
-            <div class="country-list">
+            <div class="country-list pb-5">
               <CountryList
                 :countries="filteredCountries"
                 @selectCountry="fetchCountryDetails"
@@ -209,16 +206,15 @@ nav {
 }
 
 .header-content h1 {
-  font-family: "Spectral";
   font-size: 48px;
   font-weight: 700;
   color: #4a4543;
 }
 
 .header-content p {
-  font-size: 1.2rem;
+  font-size: 18px;
   margin-top: 10px;
-  color: #999393;
+  color: #575555;
 }
 
 .header-content .img {
@@ -226,10 +222,9 @@ nav {
 }
 
 .header-content h2 {
-  font-family: "Spectral";
   font-size: 30px;
   font-weight: 700;
-  color: #333;
+  color: #4a4543;
 }
 
 .country-spacing {
@@ -251,26 +246,26 @@ nav {
 }
 
 .search-input-wrapper input {
-  padding: 10px 50px 10px 40px; /* Ajusta para dar espaço ao ícone */
+  padding: 10px 50px 10px 40px;
   width: 100%;
-  border: none; /* Remove bordas laterais e superiores */
-  border-bottom: 2px solid #f0615a; /* Borda inferior padrão */
+  border: none;
+  border-bottom: 2px solid #f0615a;
   border-radius: 0;
-  font-size: 1rem;
-  transition: border-color 0.3s ease; /* Animação para a mudança da cor da borda */
+  font-size: 16px;
+  transition: border-color 0.3s ease;
   align-items: center;
 }
 
 .search-input-wrapper input:focus {
-  outline: none; /* Remove o outline padrão do navegador */
+  outline: none;
 }
 
 .search-input-wrapper i {
   position: absolute;
   left: 60px;
-  top: 54%;
+  top: 52%;
   transform: translateY(-50%);
-  font-size: 1.2rem;
+  font-size: 18px;
   color: #f0615a;
 }
 
@@ -281,6 +276,7 @@ nav {
 .button-group button {
   margin-right: 15px;
   margin-bottom: 10px;
+  border-radius: 8px;
 }
 
 button {
@@ -289,19 +285,11 @@ button {
   background-color: #f0615a;
   color: white;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
 }
 
 /* Lista de países */
-.country-list {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
 .country-list ul {
   list-style-type: none;
   padding: 0;
@@ -331,23 +319,6 @@ button {
 
 .country-info div {
   text-align: left;
-}
-
-/* País - dados */
-.country-list .country-name {
-  font-weight: bold;
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.country-list .country-stats {
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.country-list .fatality-rate {
-  font-weight: bold;
-  color: #ff4c4c;
 }
 
 /* Detalhes do país selecionado */
