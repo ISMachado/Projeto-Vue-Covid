@@ -26,7 +26,7 @@
               />
             </div>
           </div>
-          <div class="text-center country-spacing">
+          <div class="text-center country-spacing filters-container">
             <div class="search-container">
               <div>
                 <h2>Filtrar dados sobre um país</h2>
@@ -58,22 +58,11 @@
               </div>
             </div>
 
-            <div class="country-list pb-5">
+            <div class="country-list pb-4">
               <CountryList
                 :countries="paginatedCountries"
                 @selectCountry="fetchCountryDetails"
               />
-            </div>
-
-            <!-- Detalhes de um país -->
-            <div v-if="selectedCountry" class="country-details">
-              <h2>Detalhes de {{ selectedCountry.name }}</h2>
-              <ul>
-                <li v-for="report in countryDetails" :key="report.date">
-                  {{ report.date }} - Casos: {{ report.confirmed }} - Mortes:
-                  {{ report.deaths }}
-                </li>
-              </ul>
             </div>
 
             <div class="pagination pb-5">
@@ -109,8 +98,8 @@ export default {
       countryDetails: [],
       sortByCases: false,
       sortAlphabetical: false,
-      currentPage: 1, // Página atual
-      itemsPerPage: 5, // Quantidade de países por página
+      currentPage: 1,
+      itemsPerPage: 5
     };
   },
   computed: {
@@ -120,27 +109,24 @@ export default {
       );
 
       if (this.sortAlphabetical) {
-        // Ordena alfabeticamente A-Z ou Z-A
         filtered.sort(
           (a, b) =>
             this.sortAlphabetical === "asc"
-              ? a.name.localeCompare(b.name) // A-Z
-              : b.name.localeCompare(a.name) // Z-A
+              ? a.name.localeCompare(b.name)
+              : b.name.localeCompare(a.name)
         );
       } else if (this.sortByCases) {
-        // Ordena por número de casos
         filtered.sort(
           (a, b) =>
             this.sortByCases === "asc"
-              ? a.cases - b.cases // Menos casos
-              : b.cases - a.cases // Mais casos
+              ? a.cases - b.cases
+              : b.cases - a.cases
         );
       }
 
       return filtered;
     },
     paginatedCountries() {
-      // Calcula o índice inicial e final com base na página atual
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
       return this.filteredCountries.slice(start, end);
@@ -157,7 +143,6 @@ export default {
           const data = response.data.data;
           const uniqueCountries = [];
 
-          // Filtra os dados, mantendo apenas países com código ISO único
           data.forEach((report) => {
             if (
               !uniqueCountries.find(
@@ -189,22 +174,18 @@ export default {
         .catch((error) => console.error(error));
     },
     sortCountries() {
-      // Alterna entre ordenação crescente e decrescente
       this.sortByCases = this.sortByCases === "asc" ? "desc" : "asc";
-      this.sortAlphabetical = false; // Desativa a ordenação alfabética
+      this.sortAlphabetical = false;
     },
     sortAlphabetically() {
-      // Alterna entre ordenação crescente e decrescente
       this.sortAlphabetical = this.sortAlphabetical === "asc" ? "desc" : "asc";
-      this.sortByCases = false; // Desativa a ordenação por casos
+      this.sortByCases = false;
     },
-    // Alterna para a próxima página
     nextPage() {
       if (this.currentPage < this.totalPages) {
         this.currentPage++;
       }
     },
-    // Alterna para a página anterior
     prevPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
@@ -354,28 +335,6 @@ button {
   text-align: left;
 }
 
-/* Detalhes do país selecionado */
-.country-details {
-  margin-top: 30px;
-  text-align: left;
-}
-
-.country-details h2 {
-  margin-bottom: 10px;
-}
-
-.country-details ul {
-  list-style-type: none;
-}
-
-.country-details li {
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
-}
-
 /* Paginação */
 .pagination {
   display: flex;
@@ -399,4 +358,23 @@ button {
   cursor: not-allowed;
 }
 
+/* Container dos Filtros */
+.filters-container {
+  position: absolute;
+  top: 400px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: 80%;
+  border-radius: 10px;
+}
+
+.header-content .img {
+  position: relative;
+  z-index: 1;
+}
+
+.country-list {
+  margin-top: 20px;
+}
 </style>
