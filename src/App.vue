@@ -31,7 +31,7 @@
               <div>
                 <h2>Filtrar dados sobre um país</h2>
               </div>
-              <div class="search-input-wrapper px-5">
+              <div class="search-input-wrapper px-lg-5 py-3 py-lg-0">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input
                   type="text"
@@ -99,7 +99,7 @@ export default {
       sortByCases: false,
       sortAlphabetical: false,
       currentPage: 1,
-      itemsPerPage: 5
+      itemsPerPage: 5,
     };
   },
   computed: {
@@ -109,18 +109,14 @@ export default {
       );
 
       if (this.sortAlphabetical) {
-        filtered.sort(
-          (a, b) =>
-            this.sortAlphabetical === "asc"
-              ? a.name.localeCompare(b.name)
-              : b.name.localeCompare(a.name)
+        filtered.sort((a, b) =>
+          this.sortAlphabetical === "asc"
+            ? a.name.localeCompare(b.name)
+            : b.name.localeCompare(a.name)
         );
       } else if (this.sortByCases) {
-        filtered.sort(
-          (a, b) =>
-            this.sortByCases === "asc"
-              ? a.cases - b.cases
-              : b.cases - a.cases
+        filtered.sort((a, b) =>
+          this.sortByCases === "asc" ? a.cases - b.cases : b.cases - a.cases
         );
       }
 
@@ -358,23 +354,116 @@ button {
   cursor: not-allowed;
 }
 
-/* Container dos Filtros */
-.filters-container {
-  position: absolute;
-  top: 400px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  width: 80%;
-  border-radius: 10px;
+@media only screen and (min-width: 768px) {
+  /* Container dos Filtros */
+  .filters-container {
+    position: absolute;
+    top: 400px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: 80%;
+    border-radius: 10px;
+  }
+
+  .header-content .img {
+    position: relative;
+    z-index: 1;
+  }
+
+  .country-list {
+    margin-top: 20px;
+  }
 }
 
-.header-content .img {
-  position: relative;
-  z-index: 1;
+@media only screen and (max-width: 768px) {
+  nav {
+    text-align: center;
+  }
+
+  .header-content h1 {
+    font-size: 32px;
+    text-align: center;
+  }
+
+  .header-content p {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .header-content h2 {
+    font-size: 26px;
+  }
+
+  .header-content .img {
+    padding-left: 0;
+    width: 100%;
+  }
+
+  .search-input-wrapper input {
+    width: 100%;
+  }
+
+  .search-input-wrapper i {
+    position: absolute;
+    left: 10px;
+    top: 52%;
+    transform: translateY(-50%);
+  }
+
+  .button-group button {
+    width: 100%;
+  }
+
+  .country-spacing {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+
+  .country-list ul {
+    padding: 0;
+  }
+
+  .country-list li {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .pagination button {
+    flex: 1;
+    max-width: 100px;
+  }
+
+  .pagination span {
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+  }
 }
 
-.country-list {
-  margin-top: 20px;
+@media only screen and (max-width: 480px) {
+  .header-content h1 {
+    font-size: 24px;
+  }
+
+  .country-name {
+    font-size: 24px;
+  }
+
+  .country-stats .label {
+    font-size: 16px;
+  }
+
+  .country-stats .value {
+    font-size: 20px;
+  }
 }
 </style>
