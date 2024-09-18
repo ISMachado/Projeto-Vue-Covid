@@ -13,49 +13,53 @@
             <div class="col-lg-6 pt-lg-5">
               <h1>Conheça o Covidômetro</h1>
               <p>
-                Fique atualizado com veracidade e transparência. O Covidômetro é uma
-                ferramenta para mostrar ao usuário os dados mais recentes de casos e
-                óbitos  relacionados à pandemia de COVID-19 ao redor do mundo.
+                Fique atualizado com veracidade e transparência. O Covidômetro é
+                uma ferramenta para mostrar ao usuário os dados mais recentes de
+                casos e óbitos relacionados à pandemia de COVID-19 ao redor do
+                mundo.
               </p>
             </div>
             <div class="col-lg-6">
-              <img src="@/assets/doctor-image.png" alt="Ilustração de Médicos" class="img" />
-            </div>
-          </div>
-          <div class="text-center">
-            <div>
-              <h2>Filtrar dados sobre um país</h2>
-            </div>
-  
-            <!-- Filtro de país -->
-            <div class="search-container">
-              <input
-                type="text"
-                v-model="searchTerm"
-                placeholder="Digite o nome de um país"
+              <img
+                src="@/assets/doctor-image.png"
+                alt="Ilustração de Médicos"
+                class="img"
               />
             </div>
-        
-            <div>
-              <!-- Botão para ordenar países por quantidade de casos -->
-              <button @click="sortCountries">
-                {{
-                  sortByCases === "asc"
-                    ? "Ordenar por Mais Casos"
-                    : "Ordenar por Menos Casos"
-                }}
-              </button>
-              
-              <!-- Botão para ordenar países alfabeticamente -->
-              <button @click="sortAlphabetically">
-                {{
-                  sortAlphabetical === "asc"
-                    ? "Ordenar por Nome (Z-A)"
-                    : "Ordenar por Nome (A-Z)"
-                }}
-              </button>
+          </div>
+          <div class="text-center country-spacing">
+            <div class="search-container">
+              <div>
+                <h2>Filtrar dados sobre um país</h2>
+              </div>
+              <div class="search-input-wrapper px-5">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input
+                  type="text"
+                  v-model="searchTerm"
+                  placeholder="Digite o nome do país"
+                />
+              </div>
+              <div class="pt-4 button-group">
+                <button @click="sortCountries">
+                  {{
+                    sortByCases === "asc"
+                      ? "Ordenar por Mais Casos"
+                      : "Ordenar por Menos Casos"
+                  }}
+                </button>
+
+                <button @click="sortAlphabetically">
+                  {{
+                    sortAlphabetical === "asc"
+                      ? "Ordenar por Nome (Z-A)"
+                      : "Ordenar por Nome (A-Z)"
+                  }}
+                </button>
+              </div>
             </div>
-        
+
+
             <!-- Lista de países -->
             <div class="country-list">
               <CountryList
@@ -63,7 +67,7 @@
                 @selectCountry="fetchCountryDetails"
               />
             </div>
-        
+
             <!-- Detalhes de um país -->
             <div v-if="selectedCountry" class="country-details">
               <h2>Detalhes de {{ selectedCountry.name }}</h2>
@@ -75,7 +79,7 @@
               </ul>
             </div>
           </div>
-          </div>
+        </div>
       </header>
     </div>
   </div>
@@ -192,8 +196,8 @@ export default {
 }
 
 body {
-  font-family: "Spectral", serif;
-  background-color: #f7f6f6;
+  font-family: "Spectral", serif !important;
+  background-color: #fff9f9 !important;
 }
 
 nav {
@@ -208,13 +212,13 @@ nav {
   font-family: "Spectral";
   font-size: 48px;
   font-weight: 700;
-  color: #333;
+  color: #4a4543;
 }
 
 .header-content p {
   font-size: 1.2rem;
   margin-top: 10px;
-  color: #666;
+  color: #999393;
 }
 
 .header-content .img {
@@ -228,19 +232,66 @@ nav {
   color: #333;
 }
 
+.country-spacing {
+  padding-right: 180px;
+  padding-left: 180px;
+}
+
 /* Caixa de busca */
 .search-container {
   margin-bottom: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.search-container input {
-  padding: 10px 20px;
+.search-input-wrapper {
+  position: relative;
+}
+
+.search-input-wrapper input {
+  padding: 10px 50px 10px 40px; /* Ajusta para dar espaço ao ícone */
   width: 100%;
-  max-width: 600px;
-  border: 1px solid #ddd;
-  border-radius: 30px;
+  border: none; /* Remove bordas laterais e superiores */
+  border-bottom: 2px solid #f0615a; /* Borda inferior padrão */
+  border-radius: 0;
   font-size: 1rem;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease; /* Animação para a mudança da cor da borda */
+  align-items: center;
+}
+
+.search-input-wrapper input:focus {
+  outline: none; /* Remove o outline padrão do navegador */
+}
+
+.search-input-wrapper i {
+  position: absolute;
+  left: 60px;
+  top: 54%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #f0615a;
+}
+
+.search-input-wrapper input::placeholder {
+  color: #aaa;
+}
+
+.button-group button {
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  background-color: #f0615a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
 /* Lista de países */
@@ -319,21 +370,5 @@ nav {
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
-}
-
-button {
-  padding: 10px 20px;
-  margin-left: 10px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #45a049;
 }
 </style>

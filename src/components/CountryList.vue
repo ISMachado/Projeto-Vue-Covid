@@ -6,7 +6,7 @@
         :key="country.iso + country.name"
         @click="selectCountry(country.iso)"
       >
-        {{ country.name }} - Casos: {{ country.cases }} - Mortes:
+        Total de casos: {{ country.cases }} - {{ country.name }} - Mortes:
         {{ country.deaths }}
       </li>
     </ul>
