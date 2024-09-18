@@ -60,7 +60,7 @@
 
             <div class="country-list pb-5">
               <CountryList
-                :countries="filteredCountries"
+                :countries="paginatedCountries"
                 @selectCountry="fetchCountryDetails"
               />
             </div>
@@ -74,6 +74,16 @@
                   {{ report.deaths }}
                 </li>
               </ul>
+            </div>
+
+            <div class="pagination pb-5">
+              <button @click="prevPage" :disabled="currentPage === 1">
+                Anterior
+              </button>
+              <span>Página {{ currentPage }} de {{ totalPages }}</span>
+              <button @click="nextPage" :disabled="currentPage === totalPages">
+                Próxima
+              </button>
             </div>
           </div>
         </div>
@@ -99,6 +109,8 @@ export default {
       countryDetails: [],
       sortByCases: false,
       sortAlphabetical: false,
+      currentPage: 1, // Página atual
+      itemsPerPage: 5, // Quantidade de países por página
     };
   },
   computed: {
@@ -126,6 +138,15 @@ export default {
       }
 
       return filtered;
+    },
+    paginatedCountries() {
+      // Calcula o índice inicial e final com base na página atual
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return this.filteredCountries.slice(start, end);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredCountries.length / this.itemsPerPage);
     },
   },
   methods: {
@@ -176,6 +197,18 @@ export default {
       // Alterna entre ordenação crescente e decrescente
       this.sortAlphabetical = this.sortAlphabetical === "asc" ? "desc" : "asc";
       this.sortByCases = false; // Desativa a ordenação por casos
+    },
+    // Alterna para a próxima página
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    // Alterna para a página anterior
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
     },
   },
   created() {
@@ -232,7 +265,7 @@ nav {
   padding-left: 180px;
 }
 
-/* Caixa de busca */
+/* Filtros */
 .search-container {
   margin-bottom: 20px;
   background-color: #fff;
@@ -342,4 +375,28 @@ button {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
 }
+
+/* Paginação */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 10px 15px;
+  background-color: #f0615a;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 </style>
